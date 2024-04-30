@@ -1,15 +1,22 @@
 <template>
-  <div>
-    <p>本地后端开发任务</p>
-  </div>
+<div></div>
 </template>
 
 <script>
 export default {
-  name: "localServerTask"
+  name: "localServerTask",
+  data() {
+    return {
+      taskQueryParam: {
+        name: '',
+        status: '',
+      }
+    }
+  },
+  methods: {}
 }
 </script>
 
-<style scoped>
+<style lang="css">
 
 </style>

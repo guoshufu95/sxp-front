@@ -180,6 +180,9 @@ export default {
   },
   created() {
     this.listMenus()
+    setTimeout(()=>{
+      this.loading = false
+    }, 2000)
   },
   methods: {
     // 菜单页面展示数据

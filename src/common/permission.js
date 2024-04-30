@@ -3,7 +3,6 @@ import {getToken} from "@/common/auth";
 
 sxpRoutes.beforeEach((to, from, next) => {
     const token = getToken("token")
-    console.log("token: ". token)
     if (token) {
         if (to.path === "/login") {
             next('/')
@@ -11,7 +10,6 @@ sxpRoutes.beforeEach((to, from, next) => {
             next()
         }
     } else {
-
         if (to.path === '/login') {
             next()
         } else {

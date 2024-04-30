@@ -47,7 +47,7 @@ export default {
           setToken("token", response.data[0])
           this.$store.dispatch("setToken2State", response.data[0])
           this.msgSuccess("登录成功！")
-          this.$router.push({ path: "/home"})
+          this.$router.push({ path: "/home/menu"})
         } else {
           this.msgError("用户名或密码校验失败")
         }

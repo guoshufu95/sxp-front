@@ -171,7 +171,7 @@ export default {
       }],
       addParams: {
         parentId: undefined,
-        name: '',
+        label: '',
         leader: '',
         phone: '',
         email: '',

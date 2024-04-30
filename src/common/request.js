@@ -1,7 +1,7 @@
 import axios from 'axios'
 import store from "@/store";
-import { Message } from 'element-ui'
-import {getToken} from "@/common/auth";
+import {Message} from 'element-ui'
+import {delToken, getToken} from "@/common/auth";
 
 //create an axios instance
 const service = axios.create({
@@ -27,16 +27,24 @@ service.interceptors.request.use(
 // response拦截器
 service.interceptors.response.use(
     response => {
+
         const code = response.status
-        if (code !== 200)   {
-                return Promise.reject(response.data.error())
+        if (code !== 200) {
+            return Promise.reject(response.data.error())
         } else {
+
             return response.data
         }
     },
     error => {
+        console.log("error: ", error.response.data)
         if (error.response.data.code !== 500) {
-            return error.response
+            if (error.response.data.code === 401) {
+                delToken("token")
+                window.location.href = '/login';
+            } else {
+                return error.response
+            }
         } else {
             Message({
                 message: '服务器内部错误',

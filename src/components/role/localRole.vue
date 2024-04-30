@@ -202,7 +202,7 @@ export default {
         deptIds: undefined,
         menuIds: undefined,
       },
-      roleList: {},
+      roleList: [],
       rules: {
         name: [{required: true, message: '角色名不能为空', trigger: 'blur'}],
         roleKey: [{required: true, message: '权限字符不能为空', trigger: 'blur'}],

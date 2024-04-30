@@ -11,7 +11,7 @@ import localRole from "@/components/role/localRole.vue";
 import remoteRole from "@/components/role/remoteRole.vue";
 import localServerTask from "@/components/task/localServerTask.vue";
 import localFrontTask from "@/components/task/localFrontTask.vue";
-import mixTask from "@/components/task/mixTask.vue";
+import mixTask from "@/components/task/delayTask.vue";
 import remoteTask from "@/components/task/remoteTask.vue";
 import localTest from "@/components/test/localTest.vue";
 import remoteTest from "@/components/test/remoteTest.vue";
@@ -68,7 +68,7 @@ const routes = [
                 component: localFrontTask
             },
             {
-                path: "task/mix",
+                path: "task/delay",
                 component: mixTask
             },
             {
