@@ -22,6 +22,7 @@
           style="width: 100%;margin-bottom: 20px;"
           row-key="id"
           border
+          height="72vh"
           :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
       >
         <el-table-column

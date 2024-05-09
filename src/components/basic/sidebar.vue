@@ -1,6 +1,7 @@
 <template>
   <div class="side">
     <el-menu
+        :unique-opened="true"
         :default-active="$route.path"
         class="el-menu-vertical"
         @open="handleOpen"
@@ -55,6 +56,7 @@ export default {
 .side {
   height: 100%;
   width: 100%;
+  overflow: hidden;
 }
 
 .el-menu-vertical {

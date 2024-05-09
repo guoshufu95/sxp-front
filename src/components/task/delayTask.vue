@@ -171,24 +171,20 @@ export default {
     }
   },
   mounted() {
-    this.initWebSocket();
+
   },
   created() {
-    this.initWebSocket();
+    this.initWebSocket()
     this.taskList()
   },
   beforeDestroy: function () {
-    //页面销毁时关闭
-    if (this.ws) {
-      this.ws.close();
-      console.log("socket连接关闭中")
-    }
-    this.ws = {}
+    // // //页面销毁时关闭
+    // if (this.ws) {
+    //   this.ws.close();
+    //   console.log("socket连接关闭")
+    // }
   },
   methods: {
-    handleTasksCurrentChange(){
-
-    },
     // 条件查询
     queryTask(){
       getTasksByParam(this.taskQueryParam).then(response => {
@@ -292,40 +288,29 @@ export default {
     },
     initWebSocket() {
       //建立socket通道
-      this.ws = new WebSocket(
-          'ws:192.168.111.40:8001/taskSocket'
+      let ws = new WebSocket(
+          'ws:192.168.111.40:8000/taskSocket'
       );
+      this.ws = ws
       //socket连接成功后的回调函数
       this.ws.onopen = () => {
         console.log('websocket连接成功！');
-        //若项目中没有使用nginx转发请求则忽略这步
-        setInterval(() => {
-          this.keepAlive();
-        }, 2000);
+        setInterval(()=>{
+          this.ws.send("ping")
+        }, 2000)
       };
       //接收来自服务端消息的回调函数
-      this.ws.onmessage = evt => {
+      this.ws.onmessage = (evt) => {
         console.log('已接收来自后台的消息：', evt.data);
         // 刷新数据
         this.taskList()
       };
       //关闭socket的回调函数
-      this.ws.onclose = function () {
+      this.ws.onclose =  () => {
         // 关闭 websocket
+        this.initWebSocket()
         console.log('... 连接已关闭 ...');
       };
-      // // 路由跳转时结束websocket链接
-      // this.$router.afterEach(function() {
-      //   this.ws.close();
-      // });
-    },
-    //持续向后台发送消息，用于维护socket通道不被nginx关闭
-    keepAlive(webSocket) {
-      if (webSocket) {
-        if (webSocket.readyState === webSocket.OPEN) {
-          this.ws.send('sxp-front-socket-health')
-        }
-      }
     },
   }
 }

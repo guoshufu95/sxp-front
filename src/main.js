@@ -5,10 +5,6 @@ import 'element-ui/lib/theme-chalk/index.css';
 import store from "./store";
 import sxpRoutes from "./router";
 import  "./common/permission.js"
-import initSocket from "@/common/socket";
-
-
-Vue.prototype.$websocket = initSocket
 
 Vue.prototype.msgSuccess = function(msg) {
   this.$message({ showClose: true, message: msg, type: 'success' })

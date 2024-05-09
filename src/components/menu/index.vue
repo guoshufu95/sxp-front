@@ -17,7 +17,7 @@
           :data="menuList"
           style=" width: 100%; margin-bottom: 20px;"
           row-key="label"
-          height="75vh"
+          height="72vh"
           :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
       >
         <el-table-column
