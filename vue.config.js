@@ -5,7 +5,7 @@ module.exports = defineConfig({
     client: {overlay: false},
     proxy: {
       "/sxp": {
-        target: 'http://192.168.111.40:8000',
+        target: 'http://10.15.18.26:8000',
         changeOrigin: true,
         pathRewrite: {
           // '^/sxp': ''

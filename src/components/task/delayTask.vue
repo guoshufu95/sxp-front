@@ -67,7 +67,7 @@
         >
           <template slot-scope="scope">
             <el-button type="text" size="small" @click="editTask(scope.row.ID)">编辑</el-button>
-            <el-button type="text" size="small">删除</el-button>
+            <el-button type="text" size="small" @click="deleteTask(scope.row.ID)">删除</el-button>
             <el-button v-if="scope.row.status==='失败'" type="text" size="small">重试</el-button>
           </template>
         </el-table-column>
@@ -125,7 +125,7 @@
 </template>
 
 <script>
-import {taskList, addTask, getTasksByParam, getById, updateTask} from "@/api/task";
+import {taskList, addTask, getTasksByParam, getById, updateTask, deleteById} from "@/api/task";
 
 export default {
   name: "delayTask",
@@ -217,12 +217,27 @@ export default {
       const param = {id: id}
       getById(param).then(response => {
         if (response.code === 200) {
-          this.editTaskParam = response.data[0]
+          this.editTaskParam.name = response.data[0].name
+          this.editTaskParam.execTime = response.data[0].execTime
+          this.editTaskParam.value = response.data[0].value
+          this.editTaskParam.retryTime = response.data[0].retryTime
         } else {
           this.msgError('查询失败：', response.message)
         }
       })
       this.editTaskDialog = true
+    },
+    // 删除
+    deleteTask(id) {
+      const param = {id: id}
+      deleteById(param).then(response => {
+        if (response.code === 200) {
+          this.msgSuccess('删除成功')
+          this.taskList()
+        } else {
+          this.msgError('删除失败：', response.message)
+        }
+      })
     },
     closeAddTaskDialog() {
       this.addTaskParam = {}
@@ -252,13 +267,21 @@ export default {
     },
     // 确认编辑按钮
     confirmEditTask(){
-      updateTask(this.editTaskParam).then(response => {
-        if (response.code === 200) {
-          this.msgSuccess('更新成功')
-          this.editTaskDialog = true
-          this.taskList()
-        } else {
-          this.msgError('更新失败')
+      this.$refs['form'].validate(valid => {
+        if(valid){
+          this.editTaskParam.execTime =  Date.parse(this.editTaskParam.execTime)
+          this.editTaskParam.value = this.editTaskParam.value.toString()
+          this.editTaskParam.retryTime = this.editTaskParam.retryTime.toString()
+          console.log(this.editTaskParam)
+          updateTask(this.editTaskParam).then(response => {
+            if (response.code === 200) {
+              this.msgSuccess('更新成功')
+              this.editTaskDialog = false
+              this.taskList()
+            } else {
+              this.msgError('更新失败')
+            }
+          })
         }
       })
     },
@@ -289,7 +312,7 @@ export default {
     initWebSocket() {
       //建立socket通道
       let ws = new WebSocket(
-          'ws:192.168.111.40:8000/taskSocket'
+          'ws:10.15.18.26:8000/taskSocket'
       );
       this.ws = ws
       //socket连接成功后的回调函数

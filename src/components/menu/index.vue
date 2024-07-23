@@ -15,7 +15,7 @@
     <div class="menu-table">
       <el-table
           :data="menuList"
-          style=" width: 100%; margin-bottom: 20px;"
+          style=""
           row-key="label"
           height="72vh"
           :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
@@ -222,7 +222,6 @@ export default {
           this.msgError('获取菜单列表失败')
         }
       })
-      console.log("sssssss: ", this.menuss)
       this.addMenuDialog = true
     },
     // 确认创建菜单按钮
@@ -267,7 +266,6 @@ export default {
     // 确认更新按钮
     confirmEditMenu() {
       this.editMenuParam.hidden = this.editMenuParam.hidden.toString()
-      console.log("xxxxxxx: ", this.editMenuParam)
       updateMenu(this.editMenuParam).then(response => {
         if (response.code === 200) {
           this.msgSuccess('更新菜单成功')

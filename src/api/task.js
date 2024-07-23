@@ -27,7 +27,16 @@ export function getById(data) {
     })
 }
 
-// 新增任务
+// 根据id删除
+export function deleteById(data) {
+    return request({
+        url: '/task/deleteById',
+        method: 'post',
+        data:data
+    })
+}
+
+// 查询任务
 export function getTasksByParam(data) {
     return request({
         url: '/task/getByParam',
@@ -36,10 +45,10 @@ export function getTasksByParam(data) {
     })
 }
 
-// 新增任务
+// 更新任务
 export function updateTask(data) {
     return request({
-        url: '/task/updateTask',
+        url: '/task/update',
         method: 'post',
         data:data
     })
